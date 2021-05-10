@@ -2,6 +2,7 @@ package jp.yama2211.sbex;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -25,14 +26,30 @@ public final class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void sbExplosion(ProjectileHitEvent event){
-        Projectile p = event.getEntity();
 
-        if(p instanceof Snowball){
-            World world = p.getWorld();
-            Location loc = p.getLocation();
+        if(getConfig().getBoolean("Snowball")){
+            Projectile p = event.getEntity();
 
-            Float ft = (float)getConfig().getDouble("kibo");
-            world.createExplosion(loc,ft);
+            if(p instanceof Snowball){
+                World world = p.getWorld();
+                Location loc = p.getLocation();
+
+                Float ft = (float)getConfig().getDouble("kibo");
+                world.createExplosion(loc,ft);
+            }
         }
+
+        if(getConfig().getBoolean("Arrow")){
+            Projectile p = event.getEntity();
+
+            if(p instanceof Arrow){
+                World world = p.getWorld();
+                Location loc = p.getLocation();
+
+                Float ft = (float)getConfig().getDouble("kibo");
+                world.createExplosion(loc,ft);
+            }
+        }
+
     }
 }
