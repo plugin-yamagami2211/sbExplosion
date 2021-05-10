@@ -1,0 +1,4 @@
+name: SnowballExplosion
+version: ${project.version}
+main: jp.yama2211.sbex.Main
+api-version: 1.16
