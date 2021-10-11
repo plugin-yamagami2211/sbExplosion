@@ -2,3 +2,13 @@ name: SnowballExplosion
 version: ${project.version}
 main: jp.yama2211.sbex.Main
 api-version: 1.16
+
+commands:
+  sbex:
+    description: help
+  sbex.reload:
+    description: config reload
+
+permissions:
+  sbex.reload:
+    default: op

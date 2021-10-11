@@ -1,9 +1,23 @@
+#爆発する
+Explosion: true
+
+# Explosion が false の場合のみ
+# 雷が落ちてくる
+#ダメージがある雷 true / ダメージのない雷 false
+Thunder: true
+
 #雪玉着弾で爆発させるか
 Snowball: true
 
 #矢着弾で爆発させるか
 Arrow: true
 
+#着弾地点に火を付ける
+fire: false
+
+#着弾地点をえぐらない(ブロックを壊さない)
+#※falseで壊さない
+block: true
 
 #爆発の規模
 #クリーパーが 4.0程度らしい。

@@ -1,7 +1,10 @@
 package jp.yama2211.sbex;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
@@ -31,11 +34,23 @@ public final class Main extends JavaPlugin implements Listener {
             Projectile p = event.getEntity();
 
             if(p instanceof Snowball){
+                if(getConfig().getBoolean("Explosion")){
                 World world = p.getWorld();
                 Location loc = p.getLocation();
 
                 Float ft = (float)getConfig().getDouble("kibo");
-                world.createExplosion(loc,ft);
+                Boolean fire = getConfig().getBoolean("fire");
+                Boolean block = getConfig().getBoolean("block");
+                world.createExplosion(loc,ft,fire,block);
+                } else {
+                    if(getConfig().getBoolean("Thunder")){
+                        Location loc = p.getLocation();
+                        loc.getWorld().strikeLightning(loc);
+                    } else {
+                        Location loc = p.getLocation();
+                        loc.getWorld().strikeLightningEffect(loc);
+                    }
+                }
             }
         }
 
@@ -43,13 +58,44 @@ public final class Main extends JavaPlugin implements Listener {
             Projectile p = event.getEntity();
 
             if(p instanceof Arrow){
-                World world = p.getWorld();
-                Location loc = p.getLocation();
+                if(getConfig().getBoolean("Explosion")){
+                    World world = p.getWorld();
+                    Location loc = p.getLocation();
 
-                Float ft = (float)getConfig().getDouble("kibo");
-                world.createExplosion(loc,ft);
+                    Float ft = (float)getConfig().getDouble("kibo");
+                    Boolean fire = getConfig().getBoolean("fire");
+                    Boolean block = getConfig().getBoolean("block");
+                    world.createExplosion(loc,ft,fire,block);
+                } else {
+                    if(getConfig().getBoolean("Thunder")){
+                        Location loc = p.getLocation();
+                        loc.getWorld().strikeLightning(loc);
+                    } else {
+                        Location loc = p.getLocation();
+                        loc.getWorld().strikeLightningEffect(loc);
+                    }
+                }
             }
         }
 
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+    {
+        if (cmd.getName().equalsIgnoreCase("sbex")) {
+            if (args.length == 0) {
+                sender.sendMessage("----| " + ChatColor.GREEN + "sbExplosion" + ChatColor.RESET + " |----");
+                sender.sendMessage("/sbex reload : Configリロード");
+            }
+            if (args.length == 1) {
+                if(sender.hasPermission("sbex.reload")){
+                    if (args[0].equalsIgnoreCase("reload")) {
+                        reloadConfig();
+                        sender.sendMessage(ChatColor.GREEN + "リロードしました");
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
